@@ -1,23 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ecaceres <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/31 10:03:12 by ecaceres          #+#    #+#             */
-/*   Updated: 2019/07/31 10:20:30 by ecaceres         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <unistd.h>
 
-void	ft_putchar(char c)
+void    ft_putchar(char c);
+
+void    ft_putchar(char c)
 {
-	write(1, &c, 1);
+        write(1, &c, 1);
 }
 
-int		main(void)
+int             main(void)
 {
-	ft_putchar('A');
+        ft_putchar('A');
 }
+
