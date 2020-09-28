@@ -1,89 +1,57 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_print_combn.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ecaceres <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/31 19:05:51 by ecaceres          #+#    #+#             */
-/*   Updated: 2019/07/31 19:05:54 by ecaceres         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdbool.h>
 
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
 }
 
-void	ft_write_combo(int n, int holders[])
+void ft_putchar(char c);
+void ft_print_combn(int n)
 {
-	int		index;
-	bool	last;
+ int col[9];                   //10자 미만
+ int i;
+i = -1;
+ while (++i < 9)
+  col[i] = (i < n) ? i : -1;   //첫 번째 항목
+ if (n == 1)
+  col[0] = 1;                  //n = 1
+ while (1)
+ {
+  i = -1;
+  while (++i < 9 && col[i] >= 0)  //배열 복사
+   ft_putchar(col[i] + '0');
+  if (col[0] < 10 - n)            //마지막 번호의 첫 코드는 종료 조건
+  {
+   ft_putchar(',');
+   ft_putchar(' ');
+  }
+  if (col[0] ==  10 - n)          //마지막 번호에 도달
+   return;
+  col[n - 1]++;                   //숫자 증가
+  i = n - 1;
+  if (col[n - 1] == 10)           //마지막 숫자가 10일떄
+   while (--i > -1)               //뒤에서 배열 탐색
+   {
+    if (col [i] < 10 - n + i)     //경계에 도달하지 않을 경우 배열의 재 배열을 수행
+    {
+     col[i]++;
+     while (i < n - 1)            //이 루프를 단순화하고 싶지만 경계 조건을 건드릴 수 없습니다.
+     {
+      col[i + 1] = col[i] + 1;
+      i++;
+     }
+     break;                       //배열 재 배열을 중단하고 다음 인쇄를 실행합니다.
 
-	index = 0;
-	while (index < n)
-	{
-		ft_putchar(48 + holders[index]);
-		index++;
-	}
-	index = n - 1;
-	last = true;
-	while (index >= 0)
-	{
-		if (holders[index] != 9 - (n - 1 - index))
-		{
-			last = false;
-			break ;
-		}
-		index--;
-	}
-	if (!last)
-	{
-		ft_putchar(',');
-		ft_putchar(' ');
-	}
+    }
+   }
+ }
 }
 
-void	ft_print_combn_recursive(int n, int curr, int holders[], int st_index)
+int main()
 {
-	int index;
-	int max;
+	int n = 4;
+	ft_print_combn(n);
 
-	if (curr == n)
-	{
-		ft_write_combo(n, holders);
-	}
-	else
-	{
-		max = 10 - (n - curr);
-		index = st_index + 1;
-		while (index <= max)
-		{
-			holders[curr] = index;
-			ft_print_combn_recursive(n, curr + 1, holders, index);
-			index++;
-		}
-	}
-}
-
-void	ft_print_combn(int n)
-{
-	int holders[10];
-	int index;
-
-	index = 0;
-	while (index < n)
-	{
-		holders[index] = 0;
-		index++;
-	}
-	ft_print_combn_recursive(n, 0, holders, -1);
-}
-
-int		main(void)
-{
-	ft_print_combn(2);
+	return 0;
 }
